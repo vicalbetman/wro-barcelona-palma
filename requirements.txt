@@ -1,0 +1,11 @@
+numpy
+pandas
+pyyaml
+xarray
+netcdf4
+scipy
+networkx
+shapely
+pyproj
+geopandas
+folium
