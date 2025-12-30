@@ -1,5 +1,5 @@
 project:
-  name: "WRO_v1_barcelona_palma"
+  name: "WRO_v2_barcelona_palma_bbox_new"
 
 case_study:
   origin:
@@ -10,17 +10,21 @@ case_study:
     name: "Palma"
     lat: 39.563
     lon: 2.636
+
+  # Rectángulo nuevo (W/E/S/N)
   bbox:
-    min_lon: 1.1667
-    max_lon: 4.5
-    min_lat: 39.1667
-    max_lat: 41.6667
+    min_lon: 0.9005068006397039
+    max_lon: 4.959660720158951
+    min_lat: 38.790563855346335
+    max_lat: 41.743317344955614
+
   horizon_hours: 48
 
 grid:
   step_km: 5
   connectivity: 8
-  coast_buffer_km: 2
+  # Empieza pequeño para no “cerrar” pasos cerca de costa
+  coast_buffer_km: 0.5
 
 vessel:
   name: "ARESA_FCAT_HSC"
@@ -32,13 +36,26 @@ vessel:
   lambda_sea: 0.3
 
 data:
+  # Oleaje Copernicus descargado
   waves_file: "datawaves.nc"
   waves_vars:
     hs: "VHM0"
     wave_dir: "VMDR"
-  coastline_file: "datacoastline.geojson"
+
+  # Tierra como polígonos (OSM land-polygons)
+  # IMPORTANTE: en Windows el archivo se ve como “land_polygons”,
+  # pero el nombre real es land_polygons.shp (y necesita también .dbf/.shx/.prj/.cpg al lado)
+  land_polygons_file: "land_polygons.shp"
+
+  # (Opcional) si tienes el rectángulo como GeoJSON (por ejemplo “map (1).geojson”),
+  # déjalo aquí para debug/visualización:
+  region_polygon_file: "map (1).geojson"
+
+routing:
+  time_index: 0
 
 outputs:
+  dir: ".outputs"
   route_geojson: "route.geojson"
   metrics_json: "metrics.json"
   map_html: "map.html"
